@@ -22,8 +22,11 @@ public class Task {
     @Column(name = "due_date")
     private LocalDate dueDate;
 
+    @Column
+    private boolean complete;
+
     @ManyToOne
-    // add the nullable=false to ensure every chocolate must be associated to a non-null estate
+    // can add the nullable=false to ensure every task must be associated to a non-null user
     @JoinColumn(name="user_id")
     @JsonIgnoreProperties({"tasks"})
     private User user;
@@ -33,6 +36,7 @@ public class Task {
         this.task = task;
         this.priority = priority;
         this.dueDate = dueDate;
+        this.complete = false;
         this.user = user;
     }
 
@@ -73,6 +77,14 @@ public class Task {
 
     public User getUser() {
         return user;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 
     public void setUser(User user) {

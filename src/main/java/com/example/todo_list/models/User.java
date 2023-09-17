@@ -24,6 +24,7 @@ public class User {
     @Column
     private String userName;
 
+
     @Value("${db.password}")
     @Column
     private String password;
