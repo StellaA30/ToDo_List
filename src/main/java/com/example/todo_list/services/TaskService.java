@@ -2,7 +2,10 @@ package com.example.todo_list.services;
 
 import com.example.todo_list.models.Priority;
 import com.example.todo_list.models.Task;
+import com.example.todo_list.models.TaskDTO;
+import com.example.todo_list.models.User;
 import com.example.todo_list.repositories.TaskRepository;
+import com.example.todo_list.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +20,21 @@ public class TaskService {
     @Autowired
     TaskRepository taskRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
 
     // create new task
+    public Task addNewTask(TaskDTO taskDTO){
+
+        //find user using userId
+        User user = userRepository.findById(taskDTO.getUserId()).get();
+
+        //create new task object using the DTO values
+        Task newTask = new Task(taskDTO.getText(), taskDTO.getPriority(), taskDTO.getDueDate(), user);
+        return taskRepository.save(newTask);
+
+    }
 
     // get all tasks
     public List<Task> getAllTasks(){
