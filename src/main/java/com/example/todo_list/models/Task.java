@@ -13,7 +13,7 @@ public class Task {
     private Long id;
 
     @Column
-    private String task;
+    private String text;
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -32,8 +32,8 @@ public class Task {
     private User user;
 
 
-    public Task(String task, Priority priority, LocalDate dueDate, User user){
-        this.task = task;
+    public Task(String text, Priority priority, LocalDate dueDate, User user){
+        this.text = text;
         this.priority = priority;
         this.dueDate = dueDate;
         this.complete = false;
@@ -51,12 +51,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getTask() {
-        return task;
+    public String getText() {
+        return text;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Priority getPriority() {
