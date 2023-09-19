@@ -46,7 +46,6 @@ public class TaskService {
         return taskRepository.findAllByUserIdAndComplete(userId, complete);
     }
 
-
     // get all task for a specific user
     public List<Task> getAllTaskByUserId(Long userId){
         return taskRepository.findAllByUserId(userId);

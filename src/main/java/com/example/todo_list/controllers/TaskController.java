@@ -10,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -51,7 +49,20 @@ public class TaskController {
 
     // get all tasks/derived queries
 
+    public ResponseEntity<List<Task>> getAllTask(@RequestParam(required = false, name = "userId") Long userId,
+                                                 @RequestParam(required = false, name = "complete") Boolean complete){
 
+        if(userId != null && complete!=null){
+            return new ResponseEntity<>(taskService.getAllTasksByUserIdAndComplete(userId, complete), HttpStatus.OK);
+
+        } else if (userId != null){
+            return new ResponseEntity<>(taskService.getAllTaskByUserId(userId), HttpStatus.OK);
+        }
+
+        // get all tasks -- default request
+        List<Task> allTasks = taskService.getAllTasks();
+        return new ResponseEntity<>(allTasks, HttpStatus.OK);
+    }
 
 
 
@@ -59,6 +70,12 @@ public class TaskController {
 
 
     // delete task
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Long> deleteTaskById(@PathVariable Long id){
+        taskService.deleteTask(id);
+        return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
+    }
 
 
     // update task
